@@ -8,4 +8,17 @@ public class StaticMethode
     {
         return (x % m + m) % m;
     }
+
+    public static int CheckButtonDownByPlayerNumber(string buttonName, int number)
+    {
+        
+        if (Input.GetButtonDown(buttonName + number))
+        {
+            return Mathf.FloorToInt(Input.GetAxisRaw(buttonName + number));
+        } else
+        {
+            return 0;
+        }
+    }
+
 }

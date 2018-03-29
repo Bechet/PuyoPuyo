@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class CharacterManager : MonoBehaviour
 {
     List<Character> listCharacter;
+    private int nbCharacter;
     List<Player> listPlayer;
     private int xMax;
     private int yMax;
@@ -15,13 +16,10 @@ public class CharacterManager : MonoBehaviour
     public int yTranslation;
 
     public int nbPlayer;
-    private Canvas canvas;
 
     // Use this for initialization
     void Start()
     {
-        this.canvas = GameObject.FindGameObjectWithTag("CharacterSelectCanvas").GetComponent<Canvas>();
-        this.listCharacter = new List<Character>();
         LoadAllCharacters();
         this.listPlayer = new List<Player>();
         this.xMax = 3;
@@ -29,8 +27,12 @@ public class CharacterManager : MonoBehaviour
 
         for (int i = 0; i < this.nbPlayer; i++)
         {
-            this.listPlayer.Add(new Player(i));
+            Player player = new Player(i);
+            player.UpdateCharacter(GetCharacter(player.xCharacterSelected, player.yCharacterSelected));
+            Debug.Log(player.character);
+            this.listPlayer.Add(player);
         }
+
     }
 
     // Update is called once per frame
@@ -38,21 +40,25 @@ public class CharacterManager : MonoBehaviour
     {
         CheckButtonPressed();
         FrameFadeAnimation();
+        DrawPlayersCharacter();
     }
 
     private void LoadAllCharacters()
     {
-        Image[] listImages = canvas.GetComponentsInChildren<Image>();
+        this.listCharacter = new List<Character>();
+        GameObject characterImageContainer = GameObject.FindGameObjectWithTag("CharacterImageContainer");
+        Image[] listImages = characterImageContainer.GetComponentsInChildren<Image>();
         foreach (Image image in listImages)
         {
             this.listCharacter.Add(new Character(image, image.name));
         }
+        this.nbCharacter = listImages.Length;
     }
 
     private void CheckButtonPressed()
     {
-        this.listPlayer[1].UpdateFrame(this.xInit, this.yInit, this.xTranslation, this.yTranslation);
-        for (int i = 1; i < this.listPlayer.Count; i++)
+
+        for (int i = 0; i < this.listPlayer.Count; i++)
         {
             if (Input.GetButtonDown("Horizontal" + i))
             {
@@ -64,6 +70,7 @@ public class CharacterManager : MonoBehaviour
                 this.listPlayer[i].UpdateY(Input.GetAxisRaw("Vertical" + i), this.yMax);
                 this.listPlayer[i].UpdateFrame(this.xInit, this.yInit, this.xTranslation, this.yTranslation);
             }
+
             //Update for joystic users (Horizontal)
             int returnedHorizontalValue = listPlayer[i].axisManager.UpdateHorizontalLeftJoystic(Input.GetAxis("Horizontal" + i));
             if (returnedHorizontalValue != 0)
@@ -91,5 +98,17 @@ public class CharacterManager : MonoBehaviour
         }
     }
 
+    private void DrawPlayersCharacter()
+    {
+        foreach(Player player in listPlayer)
+        {
+            player.selectedCharacterImage.sprite = player.character.image.sprite;
+        }
+    }
+
+    private Character GetCharacter(int x, int y)
+    {
+        return this.listCharacter[0];
+    }
 }
 

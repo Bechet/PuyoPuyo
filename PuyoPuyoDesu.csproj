@@ -95,9 +95,11 @@
     <Compile Include="Assets\Scripts\ControlConfigManager.cs" />
     <Compile Include="Assets\Scripts\ControlGamepad.cs" />
     <Compile Include="Assets\Scripts\ControlManager.cs" />
+    <Compile Include="Assets\Scripts\CreditScript.cs" />
     <Compile Include="Assets\Scripts\FadeAnimation.cs" />
     <Compile Include="Assets\Scripts\MenuSelectScript.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
+    <Compile Include="Assets\Scripts\PlayerNumberScript.cs" />
     <Compile Include="Assets\Scripts\StaticMethode.cs" />
     <Compile Include="Assets\Scripts\Tags.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />

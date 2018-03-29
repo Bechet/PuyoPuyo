@@ -46,4 +46,11 @@ public class FadeAnimation{
         color.a = getAlpha();
         return color;
     }
+
+    public void Reset(Color color)
+    {
+        this.color = color;
+        this.alpha = 1F;
+        this.isFading = true;
+    }
 }

@@ -6,11 +6,12 @@ using UnityEngine.UI;
 public class Player
 {
     private int number;
-    private Character character;
-    private int xCharacterSelected;
-    private int yCharacterSelected;
+    public Character character;
+    public int xCharacterSelected;
+    public int yCharacterSelected;
     private Image frame;
     private Color color;
+    public Image selectedCharacterImage;
     public AxisManager axisManager;
     public FadeAnimation fadeAnimation;
     public Player(int number)
@@ -18,6 +19,7 @@ public class Player
         this.axisManager = new AxisManager();
         this.number = number;
         this.frame = GameObject.FindGameObjectWithTag("Frame"+this.number).GetComponent<Image>();
+        this.selectedCharacterImage = GameObject.FindGameObjectWithTag("SelectedCharacterImage" + this.number).GetComponent<Image>();
         switch (number)
         {
             case 0:
@@ -42,6 +44,7 @@ public class Player
                 this.yCharacterSelected = 2;
                 break;
         }
+
         this.fadeAnimation = new FadeAnimation(this.color, 0.3f, 1.3f, 0.07f);
 
     }
@@ -72,6 +75,11 @@ public class Player
     public void UpdateFrameColor()
     {
         this.frame.GetComponent<Image>().color = this.fadeAnimation.getColor();
+    }
+
+    public void UpdateCharacter(Character character)
+    {
+        this.character = character;
     }
 
     public void SetFrame(Image image)
